@@ -16,6 +16,14 @@ def get_args_parser():
                         '--reponame',
                         default='Default-repo',
                         help='set repository name, default: Default-repo')
+    parser.add_argument('-ri',
+                        '--repoid',
+                        default=None,
+                        help='set repository id, default None')
+    parser.add_argument('-ul',
+                        '--uploadurl',
+                        default=None,
+                        help='set upload url, default None')
     parser.add_argument('-rp',
                         '--repopath',
                         default='/',
@@ -28,4 +36,5 @@ def get_args_parser():
                         '--fexpiration',
                         default=None,
                         help='set link expiration in days, no expiration by default')
+
     return parser

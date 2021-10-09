@@ -10,6 +10,8 @@ def main():
         args.token,
         args.filepath,
         args.reponame,
+        args.repoid,
+        args.uploadurl,
         args.repopath,
         args.fpassword,
         args.fexpiration

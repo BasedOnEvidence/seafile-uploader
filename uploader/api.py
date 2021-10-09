@@ -2,7 +2,7 @@ import requests
 import re
 import json
 from uploader.utils import urljoin
-from uninstaller.logger import get_logger
+from uploader.logger import get_logger
 
 logger = get_logger(__name__)
 
@@ -16,6 +16,7 @@ def get_repo_list(server, token):
         urljoin(server, '/api2/repos/?type=mine'),
         headers=headers
     )
+    logger.info('get_repo_list: {}'.format(response.text))
     return json.loads(response.text)
 
 
@@ -31,6 +32,7 @@ def list_share_links_of_repo(server, token, repo_id):
         urljoin(server, '/api/v2.1/share-links/?repo_id=', repo_id),
         headers=headers, params=params
     )
+    logger.info('list_share_links_of_repo: {}'.format(response.text))
     return json.loads(response.text)
 
 
@@ -73,6 +75,7 @@ def delete_file(server, token, repo_id, file_path):
         urljoin(server, '/api2/repos/', repo_id, '/file/?p=', file_path),
         headers=headers, params=params
     )
+    logger.info('delete_file: {}'.format(response.text))
     return response
 
 
@@ -84,6 +87,7 @@ def delete_share_link(server, token, link_token):
         urljoin(server, '/api/v2.1/share-links/', link_token),
         headers=headers
     )
+    logger.info('delete_share_link: {}'.format(response.text))
     return response
 
 
@@ -93,14 +97,16 @@ def _get_upload_link(server, token, repo_id, repo_path):
         'Authorization': 'Token {}'.format(token),
     }
     response = requests.get(url, headers=headers)
+    logger.info('_get_upload_link: {}'.format(response.text))
     return re.match(r'"(.*)"', response.text).group(1)
 
 
 def upload_file(
-    server, token, repo_id, repo_path,
+    server, token, repo_id, upload_url, repo_path,
     file_name, file_obj, replace=True
 ):
-    upload_url = _get_upload_link(server, token, repo_id, repo_path)
+    if not upload_url:
+        upload_url = _get_upload_link(server, token, repo_id, repo_path)
     headers = {
         'Authorization': 'Token {}'.format(token),
     }
@@ -121,6 +127,7 @@ def upload_file(
     response = requests.post(
         upload_url, headers=headers, files=files
     )
+    logger.info('upload_file: {}'.format(response.text))
     return response.text
 
 
@@ -162,6 +169,7 @@ def get_share_link(
         urljoin(server, '/api/v2.1/share-links/'),
         headers=headers, data=data
     )
+    logger.info('get_share_link: {}'.format(response.text))
     link = json.loads(response.text)['link']
     if direct_link:
         link = link + '?dl=1'
