@@ -112,17 +112,17 @@ positional arguments:<br />
 
 optional arguments:<br />
   -h, --help            show this help message and exit<br />
-  -r REPONAME, --reponame REPONAME<br />
+  -r REPONAME, --reponame REPONAME
                         set repository name, default: Default-repo<br />
-  -ri REPOID, --repoid REPOID<br />
+  -ri REPOID, --repoid REPOID
                         set repository id, default None<br />
-  -ul UPLOADURL, --uploadurl UPLOADURL<br />
+  -ul UPLOADURL, --uploadurl UPLOADURL
                         set upload url, default None<br />
-  -rp REPOPATH, --repopath REPOPATH<br />
+  -rp REPOPATH, --repopath REPOPATH
                         set path in repository, default: /<br />
-  -fp FPASSWORD, --fpassword FPASSWORD<br />
+  -fp FPASSWORD, --fpassword FPASSWORD
                         set password to file, no password is set by default<br />
-  -fe FEXPIRATION, --fexpiration FEXPIRATION<br />
+  -fe FEXPIRATION, --fexpiration FEXPIRATION
                         set link expiration in days, no expiration by default
 
 ## Credits
