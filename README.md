@@ -101,13 +101,29 @@ Well done, you've installed seafile-uploader and get-seafile-token packages in y
 First you need to get your token. To do this, run get-seafile-token. Insert your seafile server, your login and password. Utility will return token.
 You can also enter your repository id and path for future files upload. It's need to upload files with limited permissions (with tokens, wich generated for repos).
 
+Usage: seafile-uploader.exe [-h] [-r REPONAME] [-ri REPOID] [-ul UPLOADURL] [-rp REPOPATH] [-fp FPASSWORD] [-fe FEXPIRATION] server token filepath
 
+Seafile file uploader
 
-Optional arguments: <br />
-  -h, --help            show this help message and exit <br />
-  -r {yes,no,ask}, --restart {yes,no,ask} set restart parametr
+positional arguments:<br />
+  server                set seafile server (e.g. https://cloud.seafile.com)<br />
+  token                 set token, for more information check https://download.seafile.com/published/web-api/home.md<br />
+  filepath              set path to file to upload
 
-
+optional arguments:<br />
+  -h, --help            show this help message and exit<br />
+  -r REPONAME, --reponame REPONAME<br />
+                        set repository name, default: Default-repo<br />
+  -ri REPOID, --repoid REPOID<br />
+                        set repository id, default None<br />
+  -ul UPLOADURL, --uploadurl UPLOADURL<br />
+                        set upload url, default None<br />
+  -rp REPOPATH, --repopath REPOPATH<br />
+                        set path in repository, default: /<br />
+  -fp FPASSWORD, --fpassword FPASSWORD<br />
+                        set password to file, no password is set by default<br />
+  -fe FEXPIRATION, --fexpiration FEXPIRATION<br />
+                        set link expiration in days, no expiration by default
 
 ## Credits
 
