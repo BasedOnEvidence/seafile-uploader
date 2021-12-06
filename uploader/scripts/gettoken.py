@@ -20,7 +20,9 @@ def main():
     except requests.exceptions.RequestException as err:
         print(err)
     token = re.match(r'{"token":"(.*)"}', response.text).group(1)
-    repoid = input('Enter repo id (e.g. c506813f-4a1d-4b33-923d-f49a1178834f): ')
+    repoid = input(
+        'Enter repo id (e.g. c506813f-4a1d-4b33-923d-f49a1178834f): '
+    )
     repopath = input('Enter repo path (e.g. /): ')
     try:
         print(_get_upload_link(server, token, repoid, repopath))

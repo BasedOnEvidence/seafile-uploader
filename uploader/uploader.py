@@ -1,8 +1,10 @@
 import os
+from re import S
 from uploader.api import (
     get_repo_list, create_repo,
     get_repo, upload_file,
-    get_share_link
+    get_share_link,
+    get_token
 )
 from uploader.logger import get_logger
 
@@ -17,7 +19,8 @@ def upload_local_file(
     with open(file_path, 'rb') as file_obj:
         return (
             upload_file(
-                server, token, repo_id, upload_url, repo_path, file_name, file_obj, replace
+                server, token, repo_id, upload_url,
+                repo_path, file_name, file_obj, replace
             ),
             file_name
         )
@@ -35,12 +38,15 @@ def get_target_repo(server, token, repo_name):
 
 
 def upload(
-        server, token,
-        filepath, reponame, repoid, uploadurl,
+        server, filepath,
+        token, login, password,
+        reponame, repoid, uploadurl,
         repopath, fpassword, fexpiration
 ):
     try:
         logger.info('Seafile-uploader started')
+        if not token:
+            token = get_token(server, login, password)
         if not repoid:
             repo = get_target_repo(server, token, reponame)
             repoid = repo['id']
@@ -56,6 +62,6 @@ def upload(
         )
         logger.info('Success: {}'.format(link))
     except Exception as err:
-        logger.warning(err)
+        logger.error(err)
         return err
     return link

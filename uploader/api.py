@@ -1,6 +1,7 @@
 import requests
 import re
 import json
+import getpass
 from uploader.utils import urljoin
 from uploader.logger import get_logger
 
@@ -174,3 +175,31 @@ def get_share_link(
     if direct_link:
         link = link + '?dl=1'
     return link
+
+
+def get_token(server, username, password):
+    if not server:
+        server = input('Enter the server (e.g. https://cloud.seafile.com): ')
+    if server[-1] == '/':
+        server = server[:-1]
+    if not username:
+        username = input('Enter username (e.g. username@example.com): ')
+    if not password:
+        max_attempts = 5
+        current_attempt_number = 0
+    while current_attempt_number < max_attempts:
+        password = getpass.getpass('Enter password: ')
+        data = {
+            'username': username,
+            'password': password
+        }
+        try:
+            response = requests.post(server + '/api2/auth-token/', data=data)
+        except requests.exceptions.RequestException as err:
+            logger.warning(err)
+        if 'token' in response.text:
+            return re.match(r'{"token":"(.*)"}', response.text).group(1)
+        else:
+            logger.warning('Unable to login with provided credentials')
+            current_attempt_number += 1
+    raise Exception('Unable to login with provided credentials')

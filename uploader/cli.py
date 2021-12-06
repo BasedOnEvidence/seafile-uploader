@@ -6,12 +6,22 @@ def get_args_parser():
     parser = argparse.ArgumentParser(description='Seafile file uploader')
     parser.add_argument('server',
                         help='set seafile server (e.g. https://cloud.seafile.com)')
-    parser.add_argument('token',
+    parser.add_argument('filepath',
+                        help='set path to file to upload')
+    parser.add_argument('-t',
+                        '--token',
+                        default=None,
                         help='set token, for more information check {}'.format(
                             doc_link)
                         )
-    parser.add_argument('filepath',
-                        help='set path to file to upload')
+    parser.add_argument('-l',
+                        '--login',
+                        default=None,
+                        help='set login for auth in seafile server, default None')
+    parser.add_argument('-p',
+                        '--password',
+                        default=None,
+                        help='set password for auth in seafile server, default None')
     parser.add_argument('-r',
                         '--reponame',
                         default='Default-repo',

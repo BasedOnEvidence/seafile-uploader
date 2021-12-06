@@ -7,8 +7,10 @@ def main():
     args = parser.parse_args()
     link = upload(
         args.server,
-        args.token,
         args.filepath,
+        args.token,
+        args.login,
+        args.password,
         args.reponame,
         args.repoid,
         args.uploadurl,
