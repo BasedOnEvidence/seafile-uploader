@@ -93,13 +93,26 @@ def delete_share_link(server, token, link_token):
 
 
 def _get_upload_link(server, token, repo_id, repo_path):
-    url = urljoin(server, '/api2/repos/', repo_id + repo_path, '/upload-link/')
+    if repo_path == '/':
+        repo_path = ''
+    elif repo_path[-1] == '/':
+        repo_path = repo_path[:-1]
+    url_tail = '/api2/repos/{}{}/upload-link/'.format(repo_id, repo_path)
+    url = urljoin(server, url_tail)
+    logger.info('Current url: {}'.format(url))
     headers = {
         'Authorization': 'Token {}'.format(token),
     }
-    response = requests.get(url, headers=headers)
-    logger.info('_get_upload_link: {}'.format(response.text))
-    return re.match(r'"(.*)"', response.text).group(1)
+    try:
+        response = requests.get(url, headers=headers)
+    except requests.exceptions.RequestException as err:
+        logger.warning(err)
+    logger.info('_get_upload_link: {}'.format(response.status_code))
+    try:
+        result = re.match(r'"(.*)"', response.text).group(1)
+    except re.error as err:
+        logger.warning(err)
+    return result
 
 
 def upload_file(

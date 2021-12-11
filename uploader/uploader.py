@@ -1,5 +1,4 @@
 import os
-from re import S
 from uploader.api import (
     get_repo_list, create_repo,
     get_repo, upload_file,
